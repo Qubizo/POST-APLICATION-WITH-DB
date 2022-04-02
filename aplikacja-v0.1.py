@@ -3,6 +3,7 @@
 import psycopg2
 import tkinter as Tk
 from PIL import ImageTk, Image
+from main_window import show_window
 
 conn = psycopg2.connect("dbname=postgres user=postgres password=Elorado123*")
 
@@ -24,9 +25,14 @@ def login():
     
     for record in wynik:
         if login == record[0] and haslo == record[2] and mail == record[1]:
-            print("zalogowano")
-            
+            Alert.config(text="Poprawne dane", fg="Green")
+            show_window()
             break
+        else:
+            Alert.config(text="Niepoprawne dane", fg="Red")
+            
+          
+
             
             
 
@@ -84,7 +90,10 @@ new_image= ImageTk.PhotoImage(resized_image)
 label = Tk.Label(main, image = new_image, bg= '#0f54d4')
 label.place(relx=0, rely=0.5, relwidth=1)
 
+#Napis
 
+Alert = Tk.Label(main, text="", bg='#0f54d4', font=('Arial', 12, "bold") , fg="Red")
+Alert.place(relx=0.125, rely=0.90, relwidth=0.75, relheight=0.05)
 
 
 
