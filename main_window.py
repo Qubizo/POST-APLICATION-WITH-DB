@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import tkinter as Tk
+from tkinter import LEFT
 import psycopg2
 from datetime import datetime
 
@@ -52,13 +53,20 @@ def show_window(login):
     ostatnieposty.place(relx=0.50, rely=0.03, relwidth=0.48, relheight=0.05)
     
     
-    posty = Tk.Label(main, text="",bg='#a6a6a6', font=('Arial', 12, "bold"))
+    posty = Tk.Frame(main,bg='#a6a6a6')
     posty.place(relx=0.50, rely=0.08, relwidth=0.48, relheight=0.9)
     
+    #Post1
+    
+    user1 = Tk.Label(posty, text="2022-04-09, 10:02:00, Owner =", bg='#a6a6a6', anchor="w", borderwidth=4, relief="groove", highlightbackground="black" )
+    user1.place(relx=0.01, rely=0.02, relwidth=0.97, relheight=0.09)
+    
+    post1 = Tk.Label(posty, text="Lorem ipsum, polskafdhfdkjsbfsdkjf", bg='#a6a6a6', borderwidth=4, relief="groove", highlightbackground="black", anchor="nw", font=('Arial', 10))
+    post1.place(relx=0.01, rely=0.1, relwidth=0.97, relheight=0.2)
     
     
     
     
     
     main.mainloop()
-    
+show_window("Owner")
