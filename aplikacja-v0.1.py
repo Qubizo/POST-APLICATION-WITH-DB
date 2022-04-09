@@ -26,19 +26,12 @@ def login():
     for record in wynik:
         if login == record[0] and haslo == record[2] and mail == record[1]:
             Alert.config(text="Poprawne dane", fg="Green")
-            show_window()
+            show_window(login)
             break
         else:
             Alert.config(text="Niepoprawne dane", fg="Red")
             
-          
 
-            
-            
-
-    
-    
-    
     
 #Glowne-Okno
 
