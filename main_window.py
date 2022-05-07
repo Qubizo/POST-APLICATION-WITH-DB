@@ -48,6 +48,17 @@ def show_window(login):
     main.config(bg='#0f54d4')
     main.iconbitmap(r'2824438_academic_clip_exam_note_paper_icon.ico')
     
+    def task():
+        posty=last_post()
+        user1.config(text=f"{posty[0][2]}, {posty[0][1]}, {posty[0][0]}")
+        post1.config(text=f"{posty[0][3]}")
+        user2.config(text=f"{posty[1][2]}, {posty[1][1]}, {posty[1][0]}")
+        post2.config(text=f"{posty[1][3]}")
+        user3.config(text=f"{posty[2][2]}, {posty[2][1]}, {posty[2][0]}")
+        post3.config(text=f"{posty[2][3]}")
+        main.after(1000, task)
+    
+    
     #dodajposta
     napis_dodajpost = Tk.Label(main, text="Dodaj post:", bg='#0f54d4', font=('Arial', 12, "bold"))
     napis_dodajpost.place(relx=0.02, rely=0.03, relwidth=0.45, relheight=0.05)
@@ -95,6 +106,6 @@ def show_window(login):
     
     
     
-    
+    main.after(1000, task)
     main.mainloop()
-# show_window("Owner")
+#show_window("Owner")
