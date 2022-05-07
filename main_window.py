@@ -3,16 +3,21 @@ import tkinter as Tk
 from tkinter import LEFT
 import psycopg2
 from datetime import datetime
+from tkinter import END
+conn = psycopg2.connect("dbname=POST-APLICATION-WITH-DB user=postgres password=Elorado123*")
 
-conn = psycopg2.connect("dbname=postgres user=postgres password=Elorado123*")
-
-
-
-
-    
 
 
 def show_window(login):
+    
+    def last_post():
+        sql= '''SELECT * FROM "Posty" '''
+        cur = conn.cursor()
+        cur.execute(sql)
+        posty = cur.fetchall()
+        cur.close()
+        return posty[-1:-4:-1]
+            
     
     def submit_post(login=login):
         now = datetime.now()
@@ -27,13 +32,21 @@ def show_window(login):
         cur.execute(sql)
         conn.commit()
         cur.close()
-    
+        okienko_dodaj_post.delete('1.0', END)
+        posty=last_post()
+        user1.config(text=f"{posty[0][2]}, {posty[0][1]}, {posty[0][0]}")
+        post1.config(text=f"{posty[0][3]}")
+        user2.config(text=f"{posty[1][2]}, {posty[1][1]}, {posty[1][0]}")
+        post2.config(text=f"{posty[1][3]}")
+        user3.config(text=f"{posty[2][2]}, {posty[2][1]}, {posty[2][0]}")
+        post3.config(text=f"{posty[2][3]}")
+
     
     main = Tk.Tk()
     main.geometry("550x550") 
     main.title('Postownia')
     main.config(bg='#0f54d4')
-    main.iconbitmap(r'C:\Users\szymo\Desktop\Szymon\AplikacjaPY\2824438_academic_clip_exam_note_paper_icon.ico')
+    main.iconbitmap(r'2824438_academic_clip_exam_note_paper_icon.ico')
     
     #dodajposta
     napis_dodajpost = Tk.Label(main, text="Dodaj post:", bg='#0f54d4', font=('Arial', 12, "bold"))
@@ -62,11 +75,26 @@ def show_window(login):
     user1.place(relx=0.01, rely=0.02, relwidth=0.97, relheight=0.09)
     
     post1 = Tk.Label(posty, text="Lorem ipsum, polskafdhfdkjsbfsdkjf", bg='#a6a6a6', borderwidth=4, relief="groove", highlightbackground="black", anchor="nw", font=('Arial', 10))
-    post1.place(relx=0.01, rely=0.1, relwidth=0.97, relheight=0.2)
+    post1.place(relx=0.01, rely=0.12, relwidth=0.97, relheight=0.2)
     
+    #Post2
+    
+    user2 = Tk.Label(posty, text="2022-04-09, 10:02:00, Owner =", bg='#a6a6a6', anchor="w", borderwidth=4, relief="groove", highlightbackground="black" )
+    user2.place(relx=0.01, rely=0.34, relwidth=0.97, relheight=0.09)
+    
+    post2 = Tk.Label(posty, text="Lorem ipsum, polskafdhfdkjsbfsdkjf", bg='#a6a6a6', borderwidth=4, relief="groove", highlightbackground="black", anchor="nw", font=('Arial', 10))
+    post2.place(relx=0.01, rely=0.44, relwidth=0.97, relheight=0.2)
+    
+    #Post3
+    
+    user3 = Tk.Label(posty, text="2022-04-09, 10:02:00, Owner =", bg='#a6a6a6', anchor="w", borderwidth=4, relief="groove", highlightbackground="black" )
+    user3.place(relx=0.01, rely=0.66, relwidth=0.97, relheight=0.09)
+    
+    post3 = Tk.Label(posty, text="Lorem ipsum, polskafdhfdkjsbfsdkjf", bg='#a6a6a6', borderwidth=4, relief="groove", highlightbackground="black", anchor="nw", font=('Arial', 10))
+    post3.place(relx=0.01, rely=0.76, relwidth=0.97, relheight=0.2)
     
     
     
     
     main.mainloop()
-show_window("Owner")
+# show_window("Owner")

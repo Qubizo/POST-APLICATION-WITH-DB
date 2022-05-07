@@ -5,7 +5,7 @@ import tkinter as Tk
 from PIL import ImageTk, Image
 from main_window import show_window
 
-conn = psycopg2.connect("dbname=postgres user=postgres password=Elorado123*")
+conn = psycopg2.connect("dbname=POST-APLICATION-WITH-DB user=postgres password=Elorado123*")
 
 def login():
     login = okienko_wpisz_Login.get()
@@ -38,7 +38,7 @@ def login():
 main = Tk.Tk()
 main.geometry("350x550") 
 main.title('Logowanie')
-main.iconbitmap(r'C:\Users\szymo\Desktop\Szymon\AplikacjaPY\2824438_academic_clip_exam_note_paper_icon.ico')
+main.iconbitmap(r'2824438_academic_clip_exam_note_paper_icon.ico')
 main.config(bg='#0f54d4')
 
 #Login
