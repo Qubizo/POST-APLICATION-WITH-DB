@@ -4,6 +4,7 @@ from tkinter import LEFT
 import psycopg2
 from datetime import datetime
 from tkinter import END
+import winsound
 conn = psycopg2.connect("dbname=POST-APLICATION-WITH-DB user=postgres password=Elorado123*")
 
 
@@ -50,6 +51,10 @@ def show_window(login):
     
     def task():
         posty=last_post()
+        if posty[0][3] != post1["text"]:
+            winsound.PlaySound(r"C:\Users\sebix\ZajeciaEdun\POST-APLICATION-WITH-DB\MessageSaund.wav",
+                               winsound.SND_FILENAME)
+            
         user1.config(text=f"{posty[0][2]}, {posty[0][1]}, {posty[0][0]}")
         post1.config(text=f"{posty[0][3]}")
         user2.config(text=f"{posty[1][2]}, {posty[1][1]}, {posty[1][0]}")
