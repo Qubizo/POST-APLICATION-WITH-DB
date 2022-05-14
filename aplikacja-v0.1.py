@@ -1,11 +1,20 @@
 # -*- coding: utf-8 -*-
-
+import os
+from dotenv import load_dotenv
+load_dotenv()
 import psycopg2
 import tkinter as Tk
 from PIL import ImageTk, Image
 from main_window import show_window
 
-conn = psycopg2.connect("dbname=POST-APLICATION-WITH-DB user=postgres password=Elorado123*")
+
+DB_NAME = os.getenv('DB_NAME')
+DB_HOST = os.getenv('DB_HOST')
+DB_USER = os.getenv('DB_USER')
+DB_PORT = os.getenv('DB_PORT')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
+
+conn = psycopg2.connect(f"port={DB_PORT} dbname={DB_NAME} user={DB_USER} password={DB_PASSWORD} host={DB_HOST}")
 
 def login():
     login = okienko_wpisz_Login.get()

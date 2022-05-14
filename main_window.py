@@ -1,12 +1,22 @@
 # -*- coding: utf-8 -*-
+import os
+from dotenv import load_dotenv
+load_dotenv()
 import tkinter as Tk
 from tkinter import LEFT
 import psycopg2
 from datetime import datetime
 from tkinter import END
 import winsound
-conn = psycopg2.connect("dbname=POST-APLICATION-WITH-DB user=postgres password=Elorado123*")
 
+DB_NAME = os.getenv('DB_NAME')
+DB_HOST = os.getenv('DB_HOST')
+DB_USER = os.getenv('DB_USER')
+DB_PORT = os.getenv('DB_PORT')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
+
+
+conn = psycopg2.connect(f"port={DB_PORT} dbname={DB_NAME} user={DB_USER} password={DB_PASSWORD} host={DB_HOST}")
 
 
 def show_window(login):
@@ -90,7 +100,7 @@ def show_window(login):
     user1 = Tk.Label(posty, text="2022-04-09, 10:02:00, Owner =", bg='#a6a6a6', anchor="w", borderwidth=4, relief="groove", highlightbackground="black" )
     user1.place(relx=0.01, rely=0.02, relwidth=0.97, relheight=0.09)
     
-    post1 = Tk.Label(posty, text="Lorem ipsum, polskafdhfdkjsbfsdkjf", bg='#a6a6a6', borderwidth=4, relief="groove", highlightbackground="black", anchor="nw", font=('Arial', 10))
+    post1 = Tk.Label(posty, text="", bg='#a6a6a6', borderwidth=4, relief="groove", highlightbackground="black", anchor="nw", font=('Arial', 10))
     post1.place(relx=0.01, rely=0.12, relwidth=0.97, relheight=0.2)
     
     #Post2
@@ -98,7 +108,7 @@ def show_window(login):
     user2 = Tk.Label(posty, text="2022-04-09, 10:02:00, Owner =", bg='#a6a6a6', anchor="w", borderwidth=4, relief="groove", highlightbackground="black" )
     user2.place(relx=0.01, rely=0.34, relwidth=0.97, relheight=0.09)
     
-    post2 = Tk.Label(posty, text="Lorem ipsum, polskafdhfdkjsbfsdkjf", bg='#a6a6a6', borderwidth=4, relief="groove", highlightbackground="black", anchor="nw", font=('Arial', 10))
+    post2 = Tk.Label(posty, text="", bg='#a6a6a6', borderwidth=4, relief="groove", highlightbackground="black", anchor="nw", font=('Arial', 10))
     post2.place(relx=0.01, rely=0.44, relwidth=0.97, relheight=0.2)
     
     #Post3
@@ -106,7 +116,7 @@ def show_window(login):
     user3 = Tk.Label(posty, text="2022-04-09, 10:02:00, Owner =", bg='#a6a6a6', anchor="w", borderwidth=4, relief="groove", highlightbackground="black" )
     user3.place(relx=0.01, rely=0.66, relwidth=0.97, relheight=0.09)
     
-    post3 = Tk.Label(posty, text="Lorem ipsum, polskafdhfdkjsbfsdkjf", bg='#a6a6a6', borderwidth=4, relief="groove", highlightbackground="black", anchor="nw", font=('Arial', 10))
+    post3 = Tk.Label(posty, text="", bg='#a6a6a6', borderwidth=4, relief="groove", highlightbackground="black", anchor="nw", font=('Arial', 10))
     post3.place(relx=0.01, rely=0.76, relwidth=0.97, relheight=0.2)
     
     
