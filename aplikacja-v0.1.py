@@ -74,7 +74,6 @@ napis_haslo.place(relx=0.125, rely=0.25, relwidth=0.75, relheight=0.05)
 okienko_wpisz_haslo = Tk.Entry(main,bg='#a6a6a6',show="*")
 okienko_wpisz_haslo.place(relx=0.125, rely=0.3, relwidth=0.75, relheight=0.05)
 
-#Zaloguj
 
 submit = Tk.Button(main, text="Zaloguj", command=login)
 submit.place(relx=0.3, rely=0.4, relwidth=0.4, relheight=0.05)
