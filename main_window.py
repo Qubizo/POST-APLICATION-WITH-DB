@@ -1,14 +1,26 @@
 # -*- coding: utf-8 -*-
 import os
 from dotenv import load_dotenv
-load_dotenv()
+
 import tkinter as Tk
 from tkinter import LEFT
 import psycopg2
 from datetime import datetime
 from tkinter import END
 import winsound
+import sys, os
 
+def log_step(step, fp="logging.txt"):
+    with open(fp, "a") as f:
+        f.write(f"{step}\n")
+log_step("Udał się import bibliotek w main")        
+
+def resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
+load_dotenv(resource_path("env"))
+log_step("Udało się otworzyć env w main")
 DB_NAME = os.getenv('DB_NAME')
 DB_HOST = os.getenv('DB_HOST')
 DB_USER = os.getenv('DB_USER')
@@ -16,7 +28,12 @@ DB_PORT = os.getenv('DB_PORT')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
 
 
-conn = psycopg2.connect(f"port={DB_PORT} dbname={DB_NAME} user={DB_USER} password={DB_PASSWORD} host={DB_HOST}")
+log_step("Udało się odczytać parametry logowania")
+log_step(f"{DB_NAME} {DB_HOST} {DB_USER} {DB_PORT} {DB_PASSWORD}")
+
+conn=None
+#conn = psycopg2.connect(f"port={DB_PORT} dbname={DB_NAME} user={DB_USER} password={DB_PASSWORD} host={DB_HOST}")
+log_step("Udało się conn w main")
 
 
 def show_window(login):
@@ -28,7 +45,7 @@ def show_window(login):
         posty = cur.fetchall()
         cur.close()
         return posty[-1:-4:-1]
-            
+    log_step("Udało się wczytać posty w main")            
     
     def submit_post(login=login):
         now = datetime.now()
@@ -51,18 +68,18 @@ def show_window(login):
         post2.config(text=f"{posty[1][3]}")
         user3.config(text=f"{posty[2][2]}, {posty[2][1]}, {posty[2][0]}")
         post3.config(text=f"{posty[2][3]}")
-
+    log_step("Udało się wysłać posta ")
     
     main = Tk.Tk()
     main.geometry("550x550") 
     main.title('Postownia')
     main.config(bg='#0f54d4')
-    main.iconbitmap(r'2824438_academic_clip_exam_note_paper_icon.ico')
-    
+    main.iconbitmap(resource_path(r'2824438_academic_clip_exam_note_paper_icon.ico'))
+    log_step("Udało się wczytać ikone i tytuł")
     def task():
         posty=last_post()
         if posty[0][3] != post1["text"]:
-            winsound.PlaySound(r"C:\Users\sebix\ZajeciaEdun\POST-APLICATION-WITH-DB\MessageSaund.wav",
+            winsound.PlaySound(resource_path(r"C:\Users\sebix\ZajeciaEdun\POST-APLICATION-WITH-DB\MessageSaund.wav"),
                                winsound.SND_FILENAME)
             
         user1.config(text=f"{posty[0][2]}, {posty[0][1]}, {posty[0][0]}")
@@ -72,7 +89,7 @@ def show_window(login):
         user3.config(text=f"{posty[2][2]}, {posty[2][1]}, {posty[2][0]}")
         post3.config(text=f"{posty[2][3]}")
         main.after(1000, task)
-    
+        log_step("Udało się wczytać dźwięk")
     
     #dodajposta
     napis_dodajpost = Tk.Label(main, text="Dodaj post:", bg='#0f54d4', font=('Arial', 12, "bold"))
@@ -122,5 +139,6 @@ def show_window(login):
     
     
     main.after(1000, task)
+    log_step("Udało się utworzyć gui")
     main.mainloop()
 #show_window("Owner")

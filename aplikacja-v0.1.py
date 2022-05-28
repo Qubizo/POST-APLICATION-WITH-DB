@@ -1,21 +1,37 @@
 # -*- coding: utf-8 -*-
 import os
 from dotenv import load_dotenv
-load_dotenv()
+
 import psycopg2
 import tkinter as Tk
 from PIL import ImageTk, Image
 from main_window import show_window
+import sys, os
+
+def log_step(step, fp="logging.txt"):
+    with open(fp, "a") as f:
+        f.write(f"{step}\n")
+        
+log_step("Udał się import bibliotek")
 
 
+def resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
+
+
+load_dotenv(resource_path("env"))
+log_step("Udało się otworzyć env")
 DB_NAME = os.getenv('DB_NAME')
 DB_HOST = os.getenv('DB_HOST')
 DB_USER = os.getenv('DB_USER')
 DB_PORT = os.getenv('DB_PORT')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
-
-conn = psycopg2.connect(f"port={DB_PORT} dbname={DB_NAME} user={DB_USER} password={DB_PASSWORD} host={DB_HOST}")
-
+log_step("Udało się wczytac dane do logowania")
+conn=None
+#conn = psycopg2.connect(f"port={DB_PORT} dbname={DB_NAME} user={DB_USER} password={DB_PASSWORD} host={DB_HOST}")
+log_step("Udało się conn")
 def login():
     login = okienko_wpisz_Login.get()
     print(login)
@@ -36,10 +52,11 @@ def login():
         if login == record[0] and haslo == record[2] and mail == record[1]:
             Alert.config(text="Poprawne dane", fg="Green")
             show_window(login)
+            log_step("Udało się zalogować")
             break
         else:
             Alert.config(text="Niepoprawne dane", fg="Red")
-            
+                
 
     
 #Glowne-Okno
@@ -47,7 +64,7 @@ def login():
 main = Tk.Tk()
 main.geometry("350x550") 
 main.title('Logowanie')
-main.iconbitmap(r'2824438_academic_clip_exam_note_paper_icon.ico')
+main.iconbitmap(resource_path(r'2824438_academic_clip_exam_note_paper_icon.ico'))
 main.config(bg='#0f54d4')
 
 #Login
@@ -82,7 +99,7 @@ submit.place(relx=0.3, rely=0.4, relwidth=0.4, relheight=0.05)
 
 
 
-img = (Image.open("mewaa.jpg"))
+img = (Image.open(resource_path("mewaa.jpg")))
 
 
 resized_image= img.resize((325,215), Image.ANTIALIAS)
@@ -97,5 +114,5 @@ Alert = Tk.Label(main, text="", bg='#0f54d4', font=('Arial', 12, "bold") , fg="R
 Alert.place(relx=0.125, rely=0.90, relwidth=0.75, relheight=0.05)
 
 
-
+log_step("Udało zrobić sie gui")
 main.mainloop()
