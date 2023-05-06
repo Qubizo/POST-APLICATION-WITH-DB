@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 from dotenv import load_dotenv
-
+from Register import register_win
 import psycopg2
 import tkinter as Tk
 from PIL import ImageTk, Image
@@ -21,7 +21,7 @@ def resource_path(relative_path):
     return os.path.join(os.path.abspath("."), relative_path)
 
 
-load_dotenv(resource_path("env"))
+load_dotenv(resource_path(".env"))
 log_step("Udało się otworzyć env")
 DB_NAME = os.getenv('DB_NAME')
 DB_HOST = os.getenv('DB_HOST')
@@ -29,8 +29,18 @@ DB_USER = os.getenv('DB_USER')
 DB_PORT = os.getenv('DB_PORT')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
 log_step("Udało się wczytac dane do logowania")
-conn=None
-#conn = psycopg2.connect(f"port={DB_PORT} dbname={DB_NAME} user={DB_USER} password={DB_PASSWORD} host={DB_HOST}")
+#conn=None
+print(DB_PORT)
+conn = psycopg2.connect(
+    host=DB_HOST,
+    dbname=DB_NAME,
+    port=DB_PORT,
+    user=DB_USER,
+    password=DB_PASSWORD,
+)
+print(DB_NAME)
+print(DB_HOST)
+print(DB_USER)
 log_step("Udało się conn")
 def login():
     login = okienko_wpisz_Login.get()
@@ -49,7 +59,7 @@ def login():
     okienko_wpisz_haslo.delete(0, 'end')
     
     for record in wynik:
-        if login == record[0] and haslo == record[2] and mail == record[1]:
+        if login == record[0] and haslo == record[2] and mail == record[1] and record[4] == True:
             Alert.config(text="Poprawne dane", fg="Green")
             show_window(login)
             log_step("Udało się zalogować")
@@ -95,6 +105,7 @@ okienko_wpisz_haslo.place(relx=0.125, rely=0.3, relwidth=0.75, relheight=0.05)
 submit = Tk.Button(main, text="Zaloguj", command=login)
 submit.place(relx=0.3, rely=0.4, relwidth=0.4, relheight=0.05)
 
+
 #Zdjęcie
 
 
@@ -113,6 +124,10 @@ label.place(relx=0, rely=0.5, relwidth=1)
 Alert = Tk.Label(main, text="", bg='#0f54d4', font=('Arial', 12, "bold") , fg="Red")
 Alert.place(relx=0.125, rely=0.90, relwidth=0.75, relheight=0.05)
 
+#Reg
+
+submit = Tk.Button(main, text="Rejestracja", command=register_win)
+submit.place(relx=0.74, rely=0.01, relwidth=0.25, relheight=0.05)
 
 log_step("Udało zrobić sie gui")
 main.mainloop()

@@ -19,7 +19,7 @@ def resource_path(relative_path):
     if hasattr(sys, '_MEIPASS'):
         return os.path.join(sys._MEIPASS, relative_path)
     return os.path.join(os.path.abspath("."), relative_path)
-load_dotenv(resource_path("env"))
+load_dotenv(resource_path(".env"))
 log_step("Udało się otworzyć env w main")
 DB_NAME = os.getenv('DB_NAME')
 DB_HOST = os.getenv('DB_HOST')
@@ -31,8 +31,14 @@ DB_PASSWORD = os.getenv('DB_PASSWORD')
 log_step("Udało się odczytać parametry logowania")
 log_step(f"{DB_NAME} {DB_HOST} {DB_USER} {DB_PORT} {DB_PASSWORD}")
 
-conn=None
-#conn = psycopg2.connect(f"port={DB_PORT} dbname={DB_NAME} user={DB_USER} password={DB_PASSWORD} host={DB_HOST}")
+#conn=None
+conn = psycopg2.connect(
+    host=DB_HOST,
+    dbname=DB_NAME,
+    port=DB_PORT,
+    user=DB_USER,
+    password=DB_PASSWORD,
+)
 log_step("Udało się conn w main")
 
 
